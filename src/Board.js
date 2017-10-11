@@ -79,28 +79,40 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      //make empty results array
-      var output = [];
       //build an array to reperesent the ROW
       var row = this.get(rowIndex);
       //loop each row array and push the row[colIndex] value to the new ROW array
-      var check = 
-      for ( var i = 0; i < row.length; i++ ) {
-        if ( )
-      }
-      //if reluts array is not empty return results array
+      var output = [];
 
-      // return reults array
+      for (var i = 0; i < row.length; i++) {
+        if (row[i] === 1) {
+          output.push(row.indexOf(row[i]));
+        };
+      }
+      if (output.length > 1) {
+        return output;
+      }
       //else return false
-      return rowConflicts;
+      return false;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       //call hasRowConflictAt for each column
+      var output = false;
+
+
+      for (var rowIndex = 0; rowIndex < this.get("n"); rowIndex++) {
+        // var row = this.get(rowIndex);
+        if (this.hasRowConflictAt(rowIndex) !== false) {
+          output = true;
+        }
+      }
+
+      // if (hasRowConflictAt === false)
         //if hasRowconflicts returns a populted array
           //return true
-      return false; // fixme
+      return output; // fixme
     },
 
 
