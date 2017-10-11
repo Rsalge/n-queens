@@ -108,7 +108,7 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      //make empty results array
+      //make empty output array
       var output = [];
       //build an array to reperesent the column
       var column = [];
@@ -149,13 +149,34 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      //build an array to reperesent the column
+      //build an array to reperesent the majorDiag
+      var majorDiag = [];
       //make empty results array
-      //loop each row array and push the row[i+1] value to the new column array
-      //if reluts array is not empty return results array
-        // return reults array
+      var output = [];
+      var rowLength = this.get("n");
+      //loop each row array to build majorDiag
+      for ( var rowIndex = 0; rowIndex < rowLength; rowIndex++) {
+        //push the row[i+1] value to the new majorDiag array
+        majorDiag.push(majorDiagonalColumnIndexAtFirstRow);
+        majorDiagonalColumnIndexAtFirstRow++;
+        if ( majorDiagonalColumnIndexAtFirstRow >= rowLength ) {
+          break;
+        }
+      }
+      //build output array by iterating through majorDiag
+      for ( var diagIndex = 0; diagIndex < majorDiag.length; diagIndex++ ) {
+        if ( majorDiag[diagIndex] === 1 ) {
+          //if conflict found, store in output
+          output.push(majorDiag.indexof(majorDiag[diagIndex]));
+        }
+      }
+      //if output array length is greter than 1
+      if ( output.length < 1 ) {
+        //return output array
+        return output;
+      }
       //else return false
-      return false; // fixme
+      return false; 
     },
 
     // test if any major diagonals on this board contain conflicts
@@ -174,9 +195,9 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       //build an array to reperesent the column
-      //make empty results array
+      //make empty output array
       //loop each row array and push the row[i-1] value to the new column array
-      //if reluts array is not empty return results array
+      //if reluts array is not empty return output array
         // return reults array
       //else return false
       return false; // fixme
