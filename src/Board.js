@@ -113,14 +113,14 @@
       //build an array to reperesent the column
       var column = [];
       //loop each row array and push the row[colIndex] value to the new column array
-      for ( var i = 0; i < this.get("n"); i++ ) {
-        var row = this.get(i);
+      for ( var rowIndex = 0; rowIndex < this.get("n"); rowIndex++ ) {
+        var row = this.get(rowIndex);
         column.push(row[colIndex]);
       }
       //iterate through column and push conflicts index to output
-      for ( var j = 0; j < column.length; j++ ) {
-        if ( column[j] === 1 ) {
-          output.push(column.indexOf(column[j]));
+      for ( var i = 0; i < column.length; i++ ) {
+        if ( column[i] === 1 ) {
+          output.push(column.indexOf(column[i]));
         }
       }
       if (output.length > 1) {
@@ -142,48 +142,65 @@
       return output;
     },
 
-
-
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+    hasMajorDiagonalConflictAt: function(startIndex) {
       //build an array to reperesent the majorDiag
       var majorDiag = [];
       //make empty results array
       var output = [];
       var rowLength = this.get("n");
       //loop each row array to build majorDiag
+      if( startIndex < 0 ) {
+        startIndex = rowLength + startIndex;
+      }
+      var row = [];
       for ( var rowIndex = 0; rowIndex < rowLength; rowIndex++) {
         //push the row[i+1] value to the new majorDiag array
-        majorDiag.push(majorDiagonalColumnIndexAtFirstRow);
-        majorDiagonalColumnIndexAtFirstRow++;
-        if ( majorDiagonalColumnIndexAtFirstRow >= rowLength ) {
-          break;
+        row = this.get(rowIndex);
+        majorDiag.push(row[startIndex]);
+        startIndex++;
+        if ( startIndex === rowLength ) {
+          startIndex = startIndex - rowLength;
         }
       }
+      var board = [];
+      for( var i = 0; i < rowLength; i++ ) {
+        board.push(this.get(i));
+      }
+      // console.log("Major Diagonal: ", majorDiag);
+      // console.log("this is the board: ", board);
       //build output array by iterating through majorDiag
       for ( var diagIndex = 0; diagIndex < majorDiag.length; diagIndex++ ) {
         if ( majorDiag[diagIndex] === 1 ) {
           //if conflict found, store in output
-          output.push(majorDiag.indexof(majorDiag[diagIndex]));
+          output.push(majorDiag.indexOf(majorDiag[diagIndex]));
         }
       }
       //if output array length is greter than 1
-      if ( output.length < 1 ) {
+      if ( output.length > 1 ) {
         //return output array
+        // console.log("Major Diagonal conflict exists: ", majorDiag);
+        // console.log("this is the board: ", board);
         return output;
       }
       //else return false
-      return false; 
+      return false;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      //call hasMajorDiagonalConflictAt for each column
-        //if hasMajorDiagonalConflictAt returns a populted array
+      var rowLength = this.get("n");
+      //call hasMajorDiagonalConflictAt for each column, starting at negative rowLength
+      for ( var diagIndex = (-rowLength + 1); diagIndex < rowLength; diagIndex++ ) {
+        //if hasMajorDiagonalConflictAt returns !false
+        if( this.hasMajorDiagonalConflictAt(diagIndex) !== false ) {
           //return true
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -200,7 +217,42 @@
       //if reluts array is not empty return output array
         // return reults array
       //else return false
-      return false; // fixme
+      var majorDiag = [];
+      //make empty results array
+      var output = [];
+      var rowLength = this.get("n");
+      //loop each row array to build majorDiag
+      if( startIndex < 0 ) {
+        majorDiagonalColumnIndexAtFirstRow = rowLength + majorDiagonalColumnIndexAtFirstRow;
+      }
+      var row = [];
+      for ( var rowIndex = 0; rowIndex < rowLength; rowIndex++) {
+        //push the row[i+1] value to the new majorDiag array
+        row = this.get(rowIndex);
+        majorDiag.push(row[majorDiagonalColumnIndexAtFirstRow]);
+        majorDiagonalColumnIndexAtFirstRow++;
+        if ( majorDiagonalColumnIndexAtFirstRow === rowLength ) {
+          majorDiagonalColumnIndexAtFirstRow = majorDiagonalColumnIndexAtFirstRow - rowLength;
+        }
+      }
+      var board = [];
+      for( var i = 0; i < rowLength; i++ ) {
+        board.push(this.get(i));
+      }
+      for ( var diagIndex = 0; diagIndex < majorDiag.length; diagIndex++ ) {
+        if ( majorDiag[diagIndex] === 1 ) {
+          //if conflict found, store in output
+          output.push(majorDiag.indexOf(majorDiag[diagIndex]));
+        }
+      }
+      //if output array length is greter than 1
+      if ( output.length > 1 ) {
+        //return output array
+
+        return output;
+      }
+      //else return false
+      return false;
     },
 
     // test if any minor diagonals on this board contain conflicts
