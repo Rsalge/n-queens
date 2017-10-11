@@ -79,11 +79,27 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      //make empty results array
+      var output = [];
+      //build an array to reperesent the ROW
+      var row = this.get(rowIndex);
+      //loop each row array and push the row[colIndex] value to the new ROW array
+      var check = 
+      for ( var i = 0; i < row.length; i++ ) {
+        if ( )
+      }
+      //if reluts array is not empty return results array
+
+      // return reults array
+      //else return false
+      return rowConflicts;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      //call hasRowConflictAt for each column
+        //if hasRowconflicts returns a populted array
+          //return true
       return false; // fixme
     },
 
@@ -94,11 +110,19 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      //build an array to reperesent the column
+      //make empty results array
+      //loop each row array and push the row[colIndex] value to the new column array
+      //if reluts array is not empty return results array
+        // return reults array
+      //else return false
       return false; // fixme
     },
-
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      //call hasColConflictAt for each column
+        //if hasColconflicts returns a populted array
+          //return true
       return false; // fixme
     },
 
@@ -109,11 +133,20 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      //build an array to reperesent the column
+      //make empty results array
+      //loop each row array and push the row[i+1] value to the new column array
+      //if reluts array is not empty return results array
+        // return reults array
+      //else return false
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      //call hasMajorDiagonalConflictAt for each column
+        //if hasMajorDiagonalConflictAt returns a populted array
+          //return true
       return false; // fixme
     },
 
@@ -124,11 +157,20 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      //build an array to reperesent the column
+      //make empty results array
+      //loop each row array and push the row[i-1] value to the new column array
+      //if reluts array is not empty return results array
+        // return reults array
+      //else return false
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      //call hasMinorDiagonalConflictAt for each column
+      //if hasMinorDiagonalConflictAt returns a populted array
+      //return true
       return false; // fixme
     }
 
