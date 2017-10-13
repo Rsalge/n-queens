@@ -13,43 +13,44 @@
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 window.findNRooksSolution = function(n) {
-  var solutions = [];
-  var rowIndex = 0;
-  var colIndex = 0;
-  for ( var firstRowIndex = 0, var firstColIndex = 0; firstColIndex > n; firstColIndex++,firstRowIndex++ ) {
-    var solution = new Board({n:n});
+  var newBoard = new Board({n:n});
 
-    var invalidRow = [];
-    var invalidCol = [];
-    solution.toggle(firstRowIndex,firstColIndex);
-    invalidRow.push(firstRowIndex);
-    invalidCol.push(firstColIndex);
-    for (var rowIndex = 0; rowIndex < n; rowIndex++) {
-      for (var colIndex = 0; colIndex < n; colIndex++) {
-        if( invalidRow.includes(rowIndex)) {
-          break;
-        }
-        if (invalidCol.includes(colIndex)) {
-          continue;
-        } else {
-          invalidRow.push(rowIndex);
-          invalidCol.push(colIndex);
-          solution.togglePiece(rowIndex, colIndex);
+  var startRow = 0;
+  var startCol = 0;
+
+  var newBoardSolution = [];
+  var allSolutionsForNewBoard = [];
+
+  // ss: board.toggle(rowIndex,colIndex);
+  board.toggle(startRow, startCol);
+  // check order of toggle and placeNewMove
+  placeNewMove(startRow, startCol);
+
+  // set starting row and column index for iterating through remaining board spaces
+  startCol = colIndex++;
+  startRow = rowIndex++;
+
+  // ARRAY OF BOARD SOLUTIONS: build an array of the newBoads (solutions matrices) which contain n valid rook moves
+
+    // TEST NEXT SPACE ON NEWBOARD: iterate through the remaining spaces on the board to see if there are more valid moves to make  => i.e. if board 4x4, should iterate through 16 squares
+    for (var nextMove = 1, colIndex = (colIndex < n) ? startCol : 0, rowIndex = (rowIdex < n ? rowIndex : 0); nextMove < n*n; nextMove++, colIndex++, rowIndex++)
+
+    for (var nextMove = 1; nextMove < n*n; nextMove++) {
+      // loop through entire board
+      for (var boardDimensions = n; n > 0; n--) {
+
+
+        for (var rowIndex = startRow; rowIndex < n; rowIndex++, rowIndex = (rowIndex < n ? rowIndex : 0)) {
+          for (var colIndex = colIndex; colIndex < n; colIndex++, colIndex = (colIndex < n ? colIndex : 0) ) {
+            if (!hasRowConflictAt(rowIndex) && !hasColConflictAt(colIndex) {
+              placeNewMove(rowIndex, colIndex);
+            }
+          }
         }
       }
-    }
-    var solutionBoard = solution.rows();
-    var reducedBoard = solutionBoard.reduce( function(a,b) {
-      return a.concat(b);
-    });
-    var rookCount = reducedBoard.reduce( function(a,b) {
-      return a + b;
-    });
-    if( rookCount === n ) {
-      solutions.push(solutionBoard);
-    }
-  }
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solutionBoard));
+
+  var ouput = findNRooksSolution(n);
+
   return solutions;
 };
 

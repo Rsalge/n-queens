@@ -226,7 +226,28 @@
         }
       }
       return false;
+    },
+
+    //reduce
+    reduceArray: function(array) {
+      var output = array.reduce( function(acc,elem) {
+        return acc + elem;
+      })
+    },
+
+    reduceSolutionMatrix: function(solutionMatrix) {
+      var output = solutionMatrix.map( function (elem) {
+        return this.reduceArray(elem);
+      });
+      return this.reduceArray(output);
     }
+
+    placeNewMove: function(rowIndex, colIndex) {
+      this.newBoard[rowIndex][colIndex] = 1;
+    }
+
+
+
 
     /*--------------------  End of Helper Functions  ---------------------*/
     // var board = [];
